@@ -1,0 +1,16 @@
+.mainslide {
+    padding-top: 30px;
+    min-height: 50vh;
+    background-color: white;
+  }
+  .carousel .slider-wrapper {
+    width: 100%;
+  }
+  .carousel .thumb {
+    width: 5%;
+    height: 50px;
+  }
+  .carousel {
+    text-align: center;
+  }
+  
