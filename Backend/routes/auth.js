@@ -22,7 +22,8 @@ const authRouter = Router();
 const SALTROUND = process.env.SALTROUND;
 authRouter.post("/register", async (req, res) => {
   const { name, email, password } = req.body;
-  const file = req.files.profile_pic;
+  const file = req?.files?.profile_pic;
+  console.log(file)
   const existUser = await UserModel.findOne({ email });
   if (existUser) {
     return res.status(400).send({ message: "User already exists" });

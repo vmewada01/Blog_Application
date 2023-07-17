@@ -38,9 +38,9 @@ app.get("/", (req, res) => {
 
   app.use(authentication);
 
+  app.use("/profile", profileRouter);
 
-
-
+  app.use("/blog", appRouter);
 
 
 const PORT= process.env.PORT || 8080
