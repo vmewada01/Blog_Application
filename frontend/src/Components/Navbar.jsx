@@ -74,7 +74,7 @@ import {
                 w={"100%"}
               >
                 <Tooltip label={"click here to go home page"}>
-                  <BrowseLink to={"/"}>PATEL FAMILY</BrowseLink>
+                  <BrowseLink to={"/"}>BLOG_APPLICATION</BrowseLink>
                 </Tooltip>
               </Heading>
             </HStack>
