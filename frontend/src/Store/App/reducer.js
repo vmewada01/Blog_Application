@@ -6,6 +6,7 @@ const initState = {
   blogs: [],
   blog: {},
   userBlogs: [],
+  likes: []
 };
 
 export const reducer = (state = initState, { type, payload }) => {
@@ -117,6 +118,27 @@ export const reducer = (state = initState, { type, payload }) => {
           error: payload,
         };
       }
+
+      case types.LIKE_BLOG_REQUEST:{
+        return {
+            ...state,
+            isLoading: true,
+        }
+      }
+
+      case types.LIKE_BLOG_SUCCESS:{
+        return {
+            ...state,
+            isLoading: false,
+        }
+    }
+
+    case types.LIKE_BLOG_FAILURE:{
+        return {
+            ...state,
+            error: payload,
+        }
+    }
 
     default: {
       return state;

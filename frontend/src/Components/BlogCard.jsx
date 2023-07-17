@@ -11,9 +11,17 @@ import {
     Flex,
     Input,
     Button,
+    useToast
   } from "@chakra-ui/react";
   import React from "react";
   import { useNavigate } from "react-router-dom";
+  import { FaRegThumbsUp } from "react-icons/fa6";
+  import { FaThumbsUp } from "react-icons/fa6";
+import { useDispatch } from "react-redux";
+import { LIKE_BLOG_FAILURE, LIKE_BLOG_SUCCESS } from "../Store/App/actionTypes";
+import { likeBlog } from "../Store/App/action";
+
+ 
   
   const BlogTags = (props) => {
     return (
@@ -63,7 +71,9 @@ import {
     author_profile_pic,
   }) => {
     const navigate = useNavigate();
-  
+    const dispatch = useDispatch()
+    const toast = useToast(); 
+
     const handleClick = (params) => {
       navigate(`/blog/${params}`);
     };
@@ -72,7 +82,29 @@ import {
       alert("comments functionality added soon...");
     };
     const toShow = description.substring(0, 100) + "...";
-  
+    
+    const handlelikeFunc = (params) => {
+        dispatch(likeBlog(params)).then((res) => {
+          if (res.status === LIKE_BLOG_SUCCESS) {
+            toast({
+              title: res.message,
+              status: "success",
+              duration: 3000,
+              isClosable: true,
+              position: "top",
+            });
+          
+          } else if (res.status === LIKE_BLOG_FAILURE) {
+            toast({
+              title: res.message,
+              status: "error",
+              duration: 3000,
+              isClosable: true,
+              position: "top",
+            });
+          }
+        });
+      };
     return (
       <Wrap
         spacing="1rem"
@@ -104,7 +136,10 @@ import {
                 />
               </Link>
             </Box>
+            <Flex justifyContent={'space-between'} margin={'auto'} textAlign={'center'} alignItems={'center'} alignContent={'center'}>
             <BlogTags tags={category} marginTop="3" />
+            <Box mr='2rem' onClick={()=> handlelikeFunc(_id)}><FaRegThumbsUp size={24}  /> <FaThumbsUp size={24} />       </Box>
+            </Flex>
             <Heading fontSize="xl" marginTop="2">
               <Link
                 textDecoration="none"

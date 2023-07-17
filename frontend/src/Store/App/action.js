@@ -141,3 +141,31 @@ export const deleteBlog = (params) => (dispatch) => {
 };
 
 
+export const likeBlog = (params) => (dispatch) => {
+    const token = getData("token");
+    dispatch({ type: types.LIKE_BLOG_REQUEST });
+   // console.log(token)
+    return axios
+      .post(`http://localhost:7878/likeBlog/${params}`, {
+        headers: {
+          authorization: `Bearer ${token}`,
+        },
+      })
+      .then((res) => {
+        dispatch({ type: types.LIKE_BLOG_SUCCESS, payload: res.data.message });
+        return { status: types.LIKE_BLOG_SUCCESS, message: res.data.message };
+      })
+      .catch((err) => {
+        dispatch({
+          type: types.LIKE_BLOG_FAILURE,
+          payload: err.response.data.message,
+        });
+        return {
+          status: types.LIKE_BLOG_FAILURE,
+          message: err.response.data.message,
+        };
+      });
+  };
+  
+  
+
