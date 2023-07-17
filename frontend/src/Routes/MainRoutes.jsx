@@ -8,9 +8,6 @@ import Blog from '../Pages/Blog'
 import UserBlog from '../Pages/UserBlog'
 
 
-
-
-
 const MainRoutes = () => {
   return (
   <Routes>

@@ -6,7 +6,7 @@ export const createBlog = (params, payload) => (dispatch) => {
   const token = getData("token");
   dispatch({ type: types.CREATE_BLOG_REQUEST });
   return axios
-    .post(`https://patelserver.onrender.com/blog/create/${params}`, payload, {
+    .post(`http://localhost:7878/blog/create/${params}`, payload, {
       headers: {
         "Content-Type": "multipart/form-data",
         authorization: `Bearer ${token}`,
@@ -31,7 +31,7 @@ export const createBlog = (params, payload) => (dispatch) => {
 export const getBlogs = (payload) => (dispatch) => {
   dispatch({ type: types.GET_BLOGS_REQUEST });
   return axios
-    .get("https://patelserver.onrender.com/blogs")
+    .get("http://localhost:7878/blogs")
     .then((r) => {
       dispatch({ type: types.GET_BLOGS_SUCCESS, payload: r.data });
       return { status: types.GET_BLOGS_SUCCESS, message: r.data.message };
@@ -51,7 +51,7 @@ export const getBlogs = (payload) => (dispatch) => {
 export const getBlog = (params) => (dispatch) => {
   dispatch({ type: types.GET_BLOG_REQUEST });
   return axios
-    .get(`https://patelserver.onrender.com/blog/${params}`)
+    .get(`http://localhost:7878/blog/${params}`)
     .then((r) => {
       dispatch({ type: types.GET_BLOG_SUCCESS, payload: r.data });
       return { status: types.GET_BLOG_SUCCESS, message: r.data.message };
@@ -71,7 +71,7 @@ export const getBlog = (params) => (dispatch) => {
 export const getUserBlogs = (params) => (dispatch) => {
   dispatch({ type: types.GET_BLOG_REQUEST });
   return axios
-    .get(`https://patelserver.onrender.com/blogs/${params}`)
+    .get(`http://localhost:7878/blogs/${params}`)
     .then((r) => {
       dispatch({ type: types.GET_USER_BLOGS_SUCCESS, payload: r.data });
       return { status: types.GET_USER_BLOGS_SUCCESS, message: r.data.message };
@@ -93,7 +93,7 @@ export const updateBlog = (params, payload) => (dispatch) => {
   const token = getData("token");
   dispatch({ type: types.UPDATE_BLOG_REQUEST });
   return axios
-    .patch(`https://patelserver.onrender.com/blog/${params}`, payload, {
+    .patch(`http://localhost:7878/blog/${params}`, payload, {
       headers: {
         "Content-Type": "multipart/form-data",
         authorization: `Bearer ${token}`,
@@ -119,7 +119,7 @@ export const deleteBlog = (params) => (dispatch) => {
   const token = getData("token");
   dispatch({ type: types.DELETE_BLOG_REQUEST });
   return axios
-    .delete(`https://patelserver.onrender.com/blog/${params}`, {
+    .delete(`http://localhost:7878/blog/${params}`, {
       headers: {
         authorization: `Bearer ${token}`,
       },
@@ -141,4 +141,3 @@ export const deleteBlog = (params) => (dispatch) => {
 };
 
 
-//https://patelserver.onrender.com/

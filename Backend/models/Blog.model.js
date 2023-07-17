@@ -1,4 +1,5 @@
-const { model, Schema } = require("mongoose");
+const { model, Schema, default: mongoose } = require("mongoose");
+const { types } = require("util");
 
 const BlogSchema = new Schema({
   userId: { type: String, required: true },
@@ -9,6 +10,7 @@ const BlogSchema = new Schema({
   author: { type: String, required: true },
   author_profile_pic: String,
   date: String,
+  blog_likes:[{type: mongoose.Schema.Types.ObjectId, ref: 'BlogLike'}]
 });
 
 const BlogModel = model("blog", BlogSchema);

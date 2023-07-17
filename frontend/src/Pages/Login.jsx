@@ -33,15 +33,8 @@ import {
   
     const handleLogin = (e) => {
       e.preventDefault();
-      if (
-        userData.email === "nareshmewada014@gmail.com" ||
-        userData.email === "vinodmewada018@gmail.com" ||
-        userData.email === "rohit.mewara95@gmail.com" ||
-        userData.email === "ranumewada05@gmail.com" ||
-        userData.email === "safalmewada112@gmail.com" ||
-        userData.email === "rohanmewara07@gmail.com" ||
-        userData.email === "vishalmewada9826@gmail.com"
-      ) {
+      
+       {
         dispatch(login(userData)).then((r) => {
           if (r.status === LOGIN_SUCCESS) {
             toast({
@@ -52,7 +45,8 @@ import {
               position: "top",
             });
             navigate("/", { replace: true });
-          } else {
+          }
+           else {
             toast({
               title: r.message,
               status: "success",
@@ -62,15 +56,16 @@ import {
             });
           }
         });
-      } else {
-        toast({
-          title: "Admin Has Restricted You To Login In This Website",
-          status: "info",
-          duration: 9000,
-          isClosable: true,
-          position: "top",
-        });
-      }
+      } 
+    //   else {
+    //     toast({
+    //       title: "Admin Has Restricted You To Login In This Website",
+    //       status: "info",
+    //       duration: 9000,
+    //       isClosable: true,
+    //       position: "top",
+    //     });
+    //   }
     };
   
     return (

@@ -10,6 +10,7 @@ const blogsRouter = require("./routes/blogs");
 const userBlog = require("./routes/userBlog");
 const fileUpload = require("express-fileupload");
 const authRouter = require("./routes/auth");
+const likeBlog = require("./routes/likeRoute");
 
 
 
@@ -37,6 +38,8 @@ app.get("/", (req, res) => {
   app.use("/blog", userBlog);
 
   app.use(authentication);
+
+  app.use("/likeBlog",likeBlog)
 
   app.use("/profile", profileRouter);
 
