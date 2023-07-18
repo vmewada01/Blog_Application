@@ -29,6 +29,7 @@ appRouter.post("/create/:userId", async (req, res) => {
   const author_profile_pic = user.profile_pic;
   let date = moment().format("DD/MM/YYYY");
   cloudinary.uploader.upload(file.tempFilePath, async (err, result) => {
+   // console.log(result)
     if (err)
       return res
         .status(500)

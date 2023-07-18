@@ -1,11 +1,6 @@
 require("dotenv").config();
 const { Router } = require("express");
-const cloudinary = require("cloudinary").v2;
-const moment = require("moment");
 
-const fs = require("fs");
-const util = require("util");
-const unlinkFile = util.promisify(fs.unlink);
 
 const UserModel = require("../models/User.model");
 const BlogModel = require("../models/Blog.model");
@@ -15,10 +10,10 @@ const likeBlog = Router();
 
 likeBlog.post("/:blogId", async (req, res) => {
   const { blogId } = req.params;
-  //console.log(blogId)
+  console.log(blogId)
   try {
     const user_Data = await BlogModel.findOne({ userId: blogId });
-     // console.log(user_Data)
+      console.log(user_Data)
     if (!user_Data) {
       return res.status(404).send({ message: "Blog not found" });
     } else {
@@ -65,7 +60,7 @@ likeBlog.post("/:blogId", async (req, res) => {
   }
   
   catch (error) {
-    return res.status(404).send({ message: "somehting went wrong" });
+    return res.status(404).send({ message: "something went wrong" });
   }
 });
 

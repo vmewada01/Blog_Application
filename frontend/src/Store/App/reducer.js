@@ -130,6 +130,7 @@ export const reducer = (state = initState, { type, payload }) => {
         return {
             ...state,
             isLoading: false,
+            likes: payload
         }
     }
 

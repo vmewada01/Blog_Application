@@ -10,6 +10,7 @@ const BlogSchema = new Schema({
   author: { type: String, required: true },
   author_profile_pic: String,
   date: String,
+  blog_comments:[{type: mongoose.Schema.Types.ObjectId, ref: 'BlogComment'}],
   blog_likes:[{type: mongoose.Schema.Types.ObjectId, ref: 'BlogLike'}]
 });
 
