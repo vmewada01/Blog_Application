@@ -77,10 +77,6 @@ const BlogCard = ({
   const [like, setLike]= useState(false)
  const [comment, setComment]= useState("")
 
- const   {comment_data}= useSelector((state)=> state.appReducer)
- console.log(comment_data)
- 
-
 
   const handleClick = (params) => {
     navigate(`/blog/${params}`);
@@ -141,15 +137,7 @@ const BlogCard = ({
       }
     });
   };
-  const getComments=(params)=> {
-    console.log(params)
-    dispatch(getCommentedBlogs(params)).then((res) => {
-     console.log(res)
-    }).catch((err)=> {
-      console.log(err)
-    })
-  }
-
+ 
   //  console.log(blog_likes.length)
   //  console.log(blog_comments)
    
@@ -217,18 +205,9 @@ const BlogCard = ({
             <Button onClick={()=> handleComments(userId)} fontSize={"10px"}>
               add
             </Button>
-            <Button fontSize={"10px"} onClick={()=> getComments(userId)}>comments</Button>
+           
           </Flex>
-          <Flex>
-         {comment_data && comment_data.map((item,ind)=> {
-          return (
-            <Flex alignItems={'center'} justifyContent={'space-between'}  width={'100%'} key={ind}>
-                <Box>{item.comment}</Box>
-                <Box><Button fontSize={"10px"}>delete</Button></Box>
-            </Flex>
-          )
-         })}
-          </Flex>
+        
         </Box>
       </WrapItem>
     </Wrap>

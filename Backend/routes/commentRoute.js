@@ -10,18 +10,20 @@ const commentBlog = Router();
 
 commentBlog.get("/:blogId", async(req,res)=> {
   const { blogId } = req.params;
- // console.log(blogId)
-  const user_Data = await BlogModel.findOne({ userId: blogId });
-  //console.log(user_Data)
+  console.log(blogId)
+  const user_Data = await BlogModel.findOne({ _id: blogId });
+  console.log(user_Data)
 if (!user_Data) {
    res.status(404).send({ message: "Blog not found" });
-} else {
+} 
+else {
 
   const commented_Data = await BlogComment.find({user_id: blogId});
       console.log(commented_Data)
     if (!commented_Data) {
        res.status(404).send({ message: "Comment not found" });
     }else{
+      console.log(commented_Data)
        res.status(200).send(commented_Data);
     }
   }

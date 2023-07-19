@@ -36,7 +36,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import Navbar from "../Components/Navbar";
-import { deleteBlog, getBlog, updateBlog } from "../Store/App/action";
+import { deleteBlog, getBlog, getCommentedBlogs, updateBlog } from "../Store/App/action";
 import {
   DELETE_BLOG_FAILURE,
   DELETE_BLOG_SUCCESS,
@@ -46,6 +46,7 @@ import {
 import { getData } from "../Utils/localStorage";
 
 const BlogTags = (props) => {
+   
   return (
     <HStack spacing={2} marginTop={props.marginTop}>
       <Tag size={"md"} variant="solid" colorScheme="green">
@@ -56,7 +57,22 @@ const BlogTags = (props) => {
 };
 
 export const BlogAuthor = (props) => {
+  const dispatch = useDispatch()
+  const {blogId} = useParams();
+//console.log(blogId)
+  const comment_data = useSelector((store)=> store.appReducer.comment_data)
+ // console.log(comment_data)
+const getComments=(id)=> {
+console.log(id)
+  dispatch(getCommentedBlogs(blogId)).then((res) => {
+   console.log(res)
+  }).catch((err)=> {
+    console.log(err)
+  })
+}
+
   return (
+    <Box>
     <HStack
       py={"2"}
       as={Flex}
@@ -79,7 +95,20 @@ export const BlogAuthor = (props) => {
       </Box>
       <Text>—</Text>
       <Text>{props.date}</Text>
+      <Button fontSize={'10px'} onClick={()=> getComments(props._id)}>comments</Button>
+     
     </HStack>
+     <Flex direction={'column'} gap={'0.2rem'}>
+     {comment_data.length>0  && comment_data.map((item,ind)=> {
+      return (
+        <Flex  alignItems={'center'} justifyContent={'space-between'}  width={'100%'} key={ind}>
+            <Box>{item.comment}</Box>
+            <Box><Button fontSize={"10px"}>delete</Button></Box>
+        </Flex>
+      )
+     })}
+      </Flex>
+      </Box>
   );
 };
 
