@@ -6,7 +6,9 @@ const initState = {
   blogs: [],
   blog: {},
   userBlogs: [],
-  likes: []
+  likes: [],
+  comments: [],
+  comment_data: []
 };
 
 export const reducer = (state = initState, { type, payload }) => {
@@ -140,6 +142,50 @@ export const reducer = (state = initState, { type, payload }) => {
             error: payload,
         }
     }
+
+    case types.COMMENT_BLOG_REQUEST:{
+      return {
+          ...state,
+          isLoading: true,
+      }
+    }
+
+    case types.COMMENT_BLOG_SUCCESS:{
+      return {
+          ...state,
+          isLoading: false,
+          comments: payload
+      }
+  }
+
+  case types.COMMENT_BLOG_FAILURE:{
+      return {
+          ...state,
+          error: payload,
+      }
+  }
+  case types.GET_COMMENT_BLOG_REQUEST:{
+    return {
+        ...state,
+        isLoading: true,
+    }
+  }
+
+  case types.GET_COMMENT_BLOG_SUCCESS:{
+    return {
+        ...state,
+        isLoading: false,
+        comment_data: payload
+    }
+}
+
+case types.GET_COMMENT_BLOG_FAILURE:{
+    return {
+        ...state,
+        error: payload,
+    }
+}
+
 
     default: {
       return state;

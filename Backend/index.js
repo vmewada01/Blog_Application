@@ -45,6 +45,8 @@ app.get("/", (req, res) => {
 
   app.use(authentication);
 
+  
+
 
   app.use("/profile", profileRouter);
 

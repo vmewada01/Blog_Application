@@ -161,6 +161,7 @@ export const Blog = () => {
     });
   };
 
+
   useEffect(() => {
     dispatch(getBlog(blogId));
   }, [blogId]);

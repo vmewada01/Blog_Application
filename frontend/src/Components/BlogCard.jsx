@@ -17,9 +17,9 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { FaRegThumbsUp } from "react-icons/fa6";
 import { FaThumbsUp } from "react-icons/fa6";
-import { useDispatch } from "react-redux";
-import { LIKE_BLOG_FAILURE, LIKE_BLOG_SUCCESS } from "../Store/App/actionTypes";
-import { likeBlog } from "../Store/App/action";
+import { useDispatch, useSelector } from "react-redux";
+import { COMMENT_BLOG_FAILURE, COMMENT_BLOG_SUCCESS, LIKE_BLOG_FAILURE, LIKE_BLOG_SUCCESS } from "../Store/App/actionTypes";
+import { commentBlog, getCommentedBlogs, getLikeCommentBlogs, likeBlog } from "../Store/App/action";
 
 const BlogTags = (props) => {
   return (
@@ -68,24 +68,58 @@ const BlogCard = ({
   date,
   author,
   author_profile_pic,
+  blog_likes,
+  blog_comments
 }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const toast = useToast();
   const [like, setLike]= useState(false)
+ const [comment, setComment]= useState("")
+
+ const   {comment_data}= useSelector((state)=> state.appReducer)
+ console.log(comment_data)
+ 
+
+
   const handleClick = (params) => {
     navigate(`/blog/${params}`);
   };
 
-  const handleComments = () => {
-    alert("comments functionality added soon...");
+  const handleComments = (params) => {
+    const payload={
+       comment: comment
+    }
+  
+    dispatch(commentBlog(params,payload)).then((res) => {
+      // console.log(res)
+      if (res.status === COMMENT_BLOG_SUCCESS) {
+      
+        toast({
+          title: res.message,
+          status: "success",
+          duration: 3000,
+          isClosable: true,
+          position: "top",
+        });
+      } else if (res.status === COMMENT_BLOG_FAILURE) {
+        setLike(!like)
+        toast({
+          title: res.message,
+          status: "error",
+          duration: 3000,
+          isClosable: true,
+          position: "top",
+        });
+      }
+    });
   };
   const toShow = description.substring(0, 100) + "...";
 
   const handlelikeFunc = (params) => {
-    console.log(params);
+    // console.log(params);
     dispatch(likeBlog(params)).then((res) => {
-      console.log(res)
+      // console.log(res)
       if (res.status === LIKE_BLOG_SUCCESS) {
       
         toast({
@@ -107,8 +141,17 @@ const BlogCard = ({
       }
     });
   };
+  const getComments=(params)=> {
+    console.log(params)
+    dispatch(getCommentedBlogs(params)).then((res) => {
+     console.log(res)
+    }).catch((err)=> {
+      console.log(err)
+    })
+  }
 
- 
+  //  console.log(blog_likes.length)
+  //  console.log(blog_comments)
    
   return (
     <Wrap
@@ -137,7 +180,7 @@ const BlogCard = ({
                 _hover={{
                   transform: "scale(1.1)",
                 }}
-                onClick={() => handleClick(_id)}
+                onClick={() => handleClick(_id, comment)}
               />
             </Link>
           </Box>
@@ -150,7 +193,7 @@ const BlogCard = ({
           >
             <BlogTags tags={category} marginTop="3" />
             <Box mr="2rem" onClick={() => handlelikeFunc(userId)}>
-           {like ?<FaRegThumbsUp size={24} /> :  <FaThumbsUp size={24} /> }   {" "}
+           {blog_likes.length>0  ?  <FaThumbsUp size={24} /> :<FaRegThumbsUp size={24} /> }   {" "}
             </Box>
           </Flex>
           <Heading fontSize="xl" marginTop="2">
@@ -170,10 +213,21 @@ const BlogCard = ({
           </Text>
           <BlogAuthor name={author} date={date} avatar={author_profile_pic} />
           <Flex mx={"1"} gap={"1rem"} alignItems={"center"} my={"1"}>
-            <Input />
-            <Button onClick={handleComments} fontSize={"10px"}>
-              Comments
+            <Input type='text' placeholder='comment...' onChange={(e)=> setComment(e.target.value) } />
+            <Button onClick={()=> handleComments(userId)} fontSize={"10px"}>
+              add
             </Button>
+            <Button fontSize={"10px"} onClick={()=> getComments(userId)}>comments</Button>
+          </Flex>
+          <Flex>
+         {comment_data && comment_data.map((item,ind)=> {
+          return (
+            <Flex alignItems={'center'} justifyContent={'space-between'}  width={'100%'} key={ind}>
+                <Box>{item.comment}</Box>
+                <Box><Button fontSize={"10px"}>delete</Button></Box>
+            </Flex>
+          )
+         })}
           </Flex>
         </Box>
       </WrapItem>
