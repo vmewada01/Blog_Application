@@ -39,13 +39,13 @@ app.get("/", (req, res) => {
   app.use("/blog", userBlog);
 
   
-  app.use("/likeBlog",likeBlog)
-
-  app.use("/commentBlog",commentBlog)
+ 
 
   app.use(authentication);
 
- 
+  app.use("/likeBlog",likeBlog)
+
+  app.use("/commentBlog",commentBlog)
 
 
   app.use("/profile", profileRouter);

@@ -6,6 +6,7 @@ const blogsRouter = Router();
 
 blogsRouter.get("/:userId", async (req, res) => {
   const { userId } = req.params;
+  console.log(userId)
   const blogs = await BlogModel.find({ userId }, { userId: 0, __v: 0 });
   if (blogs.length === 0)
     return res.status(404).send({ message: "User not found" });

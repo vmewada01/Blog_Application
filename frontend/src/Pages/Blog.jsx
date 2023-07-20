@@ -36,7 +36,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import Navbar from "../Components/Navbar";
-import { deleteBlog, getBlog, getCommentedBlogs, updateBlog } from "../Store/App/action";
+import { deleteBlog, getBlog, getCommentedBlogs, getUserBlogs, updateBlog } from "../Store/App/action";
 import {
   DELETE_BLOG_FAILURE,
   DELETE_BLOG_SUCCESS,
@@ -61,14 +61,24 @@ export const BlogAuthor = (props) => {
   const {blogId} = useParams();
 //console.log(blogId)
   const comment_data = useSelector((store)=> store.appReducer.comment_data)
- // console.log(comment_data)
-const getComments=(id)=> {
-console.log(id)
+  const user_Data= useSelector((store)=> store.appReducer.blog)
+ // console.log(user_Data)
+ const user= useSelector((store)=> store.authReducer.user)
+console.log(user)
+  const getComments=(id)=> {
+  
+//console.log(id)
   dispatch(getCommentedBlogs(blogId)).then((res) => {
    console.log(res)
   }).catch((err)=> {
     console.log(err)
   })
+  dispatch(getBlog(blogId)).then((res)=> {
+    console.log(res)
+  }).catch((err)=> {
+    console.log(err)
+  })
+ 
 }
 
   return (
@@ -101,10 +111,19 @@ console.log(id)
      <Flex direction={'column'} gap={'0.2rem'}>
      {comment_data.length>0  && comment_data.map((item,ind)=> {
       return (
-        <Flex  alignItems={'center'} justifyContent={'space-between'}  width={'100%'} key={ind}>
+        <Box   alignItems={'center'} justifyContent={'space-between'}  width={'100%'} key={ind}>
+           <Flex direction={'row'} justifyContent={'space-between'}>
+            <Flex alignItems={'center'}>
+            <Box><Image src={user.profile_pic} width={'30px'} height={'40px'} borderRadius={'50%'} /></Box>
+            <Box>{user.name}</Box>
+            </Flex>
+            <Box>{item.createdAt}</Box>
+            </Flex>
+            <Flex justifyContent={'space-between'}>
             <Box>{item.comment}</Box>
             <Box><Button fontSize={"10px"}>delete</Button></Box>
-        </Flex>
+            </Flex>
+        </Box>
       )
      })}
       </Flex>

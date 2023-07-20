@@ -10,29 +10,59 @@ const commentBlog = Router();
 
 commentBlog.get("/:blogId", async(req,res)=> {
   const { blogId } = req.params;
-  console.log(blogId)
+ // console.log(blogId)
   const user_Data = await BlogModel.findOne({ _id: blogId });
-  console.log(user_Data)
+  //console.log(user_Data)
 if (!user_Data) {
    res.status(404).send({ message: "Blog not found" });
 } 
 else {
-
+    console.log(req.body)
   const commented_Data = await BlogComment.find({user_id: blogId});
-      console.log(commented_Data)
+    //  console.log(commented_Data)
     if (!commented_Data) {
        res.status(404).send({ message: "Comment not found" });
     }else{
-      console.log(commented_Data)
+      //console.log(commented_Data)
        res.status(200).send(commented_Data);
     }
   }
 })
 
 
+
+commentBlog.delete("/:blogId", async(req,res)=> {
+  const { blogId } = req.params;
+ // console.log(blogId)
+  const user_Data = await BlogModel.findOne({ _id: blogId });
+  //console.log(user_Data)
+if (!user_Data) {
+   res.status(404).send({ message: "Blog not found" });
+} 
+else {
+
+  const commented_Data = await BlogComment.find({_id: blogId });
+    //  console.log(commented_Data)
+    if (!commented_Data) {
+       res.status(404).send({ message: "Comment not found" });
+    }else{
+      //console.log(commented_Data)
+       res.status(200).send({message: "comment deleted Successfull"});
+    }
+  }
+})
+
+
+
+
+
+
+
+
+
 commentBlog.post("/:blogId", async (req, res) => {
   const { blogId } = req.params;
-  console.log(blogId)
+  //console.log(blogId)
   try {
     const user_Data = await BlogModel.findOne({ userId: blogId });
       //console.log(user_Data)
@@ -68,7 +98,7 @@ commentBlog.post("/:blogId", async (req, res) => {
             return res.status(404).send({ msg: "Blog not found" });
           }
           
-          console.log(updatedBlog);
+         // console.log(updatedBlog);
           res.status(200).send({ msg: "Blog updated successfully" });
         // console.log(new_Blog)
         // return res.status(200).send({ message: "Liked  successfully" });
