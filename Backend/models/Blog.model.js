@@ -1,6 +1,16 @@
 const { model, Schema, default: mongoose } = require("mongoose");
 const { types } = require("util");
 
+const commentSchema = new Schema({
+  text: String,
+  author: String,
+  author_image: String,
+  createdAt: {
+    type: Date,
+    default: Date.now(),
+  }
+})
+
 const BlogSchema = new Schema({
   userId: { type: String, required: true },
   title: { type: String, required: true },
@@ -10,8 +20,11 @@ const BlogSchema = new Schema({
   author: { type: String, required: true },
   author_profile_pic: String,
   date: String,
-  blog_comments:[{type: mongoose.Schema.Types.ObjectId, ref: 'BlogComment'}],
-  blog_likes:[{type: mongoose.Schema.Types.ObjectId, ref: 'BlogLike'}]
+  blog_comments:[commentSchema],
+  blog_likes:{
+    type: Boolean,
+    default: false,
+  }
 });
 
 const BlogModel = model("blog", BlogSchema);

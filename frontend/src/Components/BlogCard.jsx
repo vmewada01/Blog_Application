@@ -15,11 +15,34 @@ import {
 } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { FaRegThumbsUp } from "react-icons/fa6";
+import {
+  FaHeart,
+  FaRegComment,
+  FaRegComments,
+  FaRegHeart,
+  FaRegThumbsUp,
+} from "react-icons/fa6";
 import { FaThumbsUp } from "react-icons/fa6";
 import { useDispatch, useSelector } from "react-redux";
-import { COMMENT_BLOG_FAILURE, COMMENT_BLOG_SUCCESS, LIKE_BLOG_FAILURE, LIKE_BLOG_SUCCESS } from "../Store/App/actionTypes";
-import { commentBlog, getCommentedBlogs, getLikeCommentBlogs, likeBlog } from "../Store/App/action";
+import {
+  COMMENT_BLOG_FAILURE,
+  COMMENT_BLOG_SUCCESS,
+  DELETE_COMMENT_FAILURE,
+  DELETE_COMMENT_REQUEST,
+  DELETE_COMMENT_SUCCESS,
+  LIKE_BLOG_FAILURE,
+  LIKE_BLOG_SUCCESS,
+} from "../Store/App/actionTypes";
+import {
+  commentBlog,
+  deleteComment,
+  getBlog,
+  getBlogs,
+  getCommentedBlogs,
+  getLikeCommentBlogs,
+  likeBlog,
+} from "../Store/App/action";
+import { AiFillDelete } from "react-icons/ai";
 
 const BlogTags = (props) => {
   return (
@@ -69,28 +92,30 @@ const BlogCard = ({
   author,
   author_profile_pic,
   blog_likes,
-  blog_comments
+  blog_comments,
 }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const toast = useToast();
-  const [like, setLike]= useState(false)
- const [comment, setComment]= useState("")
+  const [like, setLike] = useState(blog_likes);
+  const [comment, setComment] = useState("");
 
+  const store = useSelector((store) => store.authReducer);
+  // console.log(store.user)
 
   const handleClick = (params) => {
     navigate(`/blog/${params}`);
   };
 
   const handleComments = (params) => {
-    const payload={
-       comment: comment
-    }
-  
-    dispatch(commentBlog(params,payload)).then((res) => {
+    const payload = {
+      comment: comment,
+      author: store.user.name,
+      image: store.user.profile_pic,
+    };
+    dispatch(commentBlog(params, payload)).then((res) => {
       // console.log(res)
       if (res.status === COMMENT_BLOG_SUCCESS) {
-      
         toast({
           title: res.message,
           status: "success",
@@ -98,8 +123,9 @@ const BlogCard = ({
           isClosable: true,
           position: "top",
         });
+        window.location.reload()
       } else if (res.status === COMMENT_BLOG_FAILURE) {
-        setLike(!like)
+        setLike(!like);
         toast({
           title: res.message,
           status: "error",
@@ -115,9 +141,7 @@ const BlogCard = ({
   const handlelikeFunc = (params) => {
     // console.log(params);
     dispatch(likeBlog(params)).then((res) => {
-      // console.log(res)
       if (res.status === LIKE_BLOG_SUCCESS) {
-      
         toast({
           title: res.message,
           status: "success",
@@ -125,8 +149,8 @@ const BlogCard = ({
           isClosable: true,
           position: "top",
         });
+        window.location.reload();
       } else if (res.status === LIKE_BLOG_FAILURE) {
-        setLike(!like)
         toast({
           title: res.message,
           status: "error",
@@ -137,10 +161,35 @@ const BlogCard = ({
       }
     });
   };
+
+  const handleDeleteFunc = (blogId,commentId) => {
+    console.log(blogId,commentId)
+    dispatch(deleteComment(blogId,commentId)).then((res)=> {
+      if (res.status === DELETE_COMMENT_SUCCESS) {
+        toast({
+          title: res.message,
+          status: "success",
+          duration: 3000,
+          isClosable: true,
+          position: "top",
+        });
+        window.location.reload();
+      } else if (res.status === DELETE_COMMENT_FAILURE) {
+        toast({
+          title: res.message,
+          status: "error",
+          duration: 3000,
+          isClosable: true,
+          position: "top",
+        });
+      } 
+    }).catch((err)=>{
+      console.log(err)
+    })
+  };
+
  
-  //  console.log(blog_likes.length)
-  //  console.log(blog_comments)
-   
+
   return (
     <Wrap
       spacing="1rem"
@@ -172,18 +221,17 @@ const BlogCard = ({
               />
             </Link>
           </Box>
-          <Flex
-            justifyContent={"space-between"}
-            margin={"auto"}
-            textAlign={"center"}
-            alignItems={"center"}
-            alignContent={"center"}
-          >
+          <Flex justifyContent={"space-between"} alignItems={"center"}>
             <BlogTags tags={category} marginTop="3" />
-            <Box mr="2rem" onClick={() => handlelikeFunc(userId)}>
-           {blog_likes.length>0  ?  <FaThumbsUp size={24} /> :<FaRegThumbsUp size={24} /> }   {" "}
+            <Box mr="2rem">
+              {blog_likes ? (
+                <FaHeart size={"25"} onClick={(e) => handlelikeFunc(_id)} />
+              ) : (
+                <FaRegHeart size={"25"} onClick={(e) => handlelikeFunc(_id)} />
+              )}
             </Box>
           </Flex>
+
           <Heading fontSize="xl" marginTop="2">
             <Link
               textDecoration="none"
@@ -195,19 +243,52 @@ const BlogCard = ({
           </Heading>
           <Text as="p" fontSize="md" marginTop="2">
             {toShow}
-            <span onClick={() => handleClick(_id)}>
+            <span onClick={() => handleClick(_id,)}>
               <Link>Read More</Link>
             </span>
           </Text>
           <BlogAuthor name={author} date={date} avatar={author_profile_pic} />
           <Flex mx={"1"} gap={"1rem"} alignItems={"center"} my={"1"}>
-            <Input type='text' placeholder='comment...' onChange={(e)=> setComment(e.target.value) } />
-            <Button onClick={()=> handleComments(userId)} fontSize={"10px"}>
-              add
-            </Button>
-           
+            <Input
+              type="text"
+              placeholder="comments......."
+              onChange={(e) => setComment(e.target.value)}
+            />
+
+            <FaRegComments onClick={() => handleComments(_id)} size={"30"} />
           </Flex>
-        
+          <Flex direction={"column"} gap={"1rem"}>
+            {blog_comments.map((item) => {
+              return (
+                <Box key={item.id}>
+                  <Flex alignItems={"center"} justifyContent={"space-between"}>
+                    <Flex alignItems={"center"}>
+                      <Box>
+                        <Image
+                          width={"30px"}
+                          height={"40px"}
+                          borderRadius={"50%"}
+                          src={item.author_image}
+                        />{" "}
+                      </Box>
+                      <Box fontStyle={"oblique"} fontWeight={"bold"}>
+                        {item.author}
+                      </Box>
+                    </Flex>
+                    <Box>{item.createdAt}</Box>
+                  </Flex>
+
+                  <Flex alignItems={"center"} justifyContent={"space-between"}>
+                    <Box>{item.text}</Box>
+                    <Box onClick={() => handleDeleteFunc(item._id,_id)}>
+                      {" "}
+                      <AiFillDelete size={"20"} />
+                    </Box>
+                  </Flex>
+                </Box>
+              );
+            })}
+          </Flex>
         </Box>
       </WrapItem>
     </Wrap>

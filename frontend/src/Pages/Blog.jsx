@@ -36,7 +36,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import Navbar from "../Components/Navbar";
-import { deleteBlog, getBlog, getCommentedBlogs, getUserBlogs, updateBlog } from "../Store/App/action";
+import { deleteBlog, getBlog,  getUserBlogs, updateBlog } from "../Store/App/action";
 import {
   DELETE_BLOG_FAILURE,
   DELETE_BLOG_SUCCESS,
@@ -68,11 +68,7 @@ console.log(user)
   const getComments=(id)=> {
   
 //console.log(id)
-  dispatch(getCommentedBlogs(blogId)).then((res) => {
-   console.log(res)
-  }).catch((err)=> {
-    console.log(err)
-  })
+  
   dispatch(getBlog(blogId)).then((res)=> {
     console.log(res)
   }).catch((err)=> {
@@ -258,11 +254,13 @@ export const Blog = () => {
               {userId === blog.userId ? (
                 <Menu>
                   <MenuButton
+                  
                     as={IconButton}
                     aria-label="Options"
-                    icon={<i className="fa-solid fa-ellipsis-vertical"></i>}
+                    icon={<i className="fa-solid fa-ellipsis-vertical">Edit</i>}
                     variant="outline"
                   />
+               
                   <MenuList size="lg">
                     <MenuItem icon={<EditIcon />} onClick={onOpen}>
                       Edit

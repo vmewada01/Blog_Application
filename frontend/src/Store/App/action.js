@@ -169,9 +169,7 @@ export const likeBlog = (params) => (dispatch) => {
       });
   };
   
-  
-
-  export const commentBlog = (params,payload) => (dispatch) => {
+    export const commentBlog = (params,payload) => (dispatch) => {
     const token = getData("token");
     console.log(payload)
     dispatch({ type: types.COMMENT_BLOG_REQUEST });
@@ -200,26 +198,38 @@ export const likeBlog = (params) => (dispatch) => {
         };
       });
   };
-  
-
-  export const getCommentedBlogs= (params) => (dispatch) => {
-    dispatch({ type: types.GET_COMMENT_BLOG_REQUEST });
+  export const deleteComment = (blogId,commentId) => (dispatch) => {
+    const token = getData("token");
+   /// console.log(payload)
+    dispatch({ type: types.DELETE_COMMENT_REQUEST });
+    //console.log(token)
     return axios
-      .get(`http://localhost:7878/commentBlog/${params}`)
-      .then((r) => {
-        console.log(r.data)
-        dispatch({ type: types.GET_COMMENT_BLOG_SUCCESS, payload: r.data });
-        return { status: types.GET_COMMENT_BLOG_SUCCESS, message: r.data.message  };
+      .delete(`http://localhost:7878/commentBlog/${blogId}/comment/${commentId}`, {
+        headers: {
+          authorization: `Bearer ${token}`,
+        },
+        
+      })
+      .then((res) => {
+        console.log(res)
+        dispatch({ type: types.DELETE_COMMENT_SUCCESS, payload: res.data.message });
+        return { status: types.DELETE_COMMENT_SUCCESS, message: res.data.message };
       })
       .catch((err) => {
+        console.log(err)
         dispatch({
-          type: types.GET_COMMENT_BLOG_FAILURE,
+          type: types.DELETE_COMMENT_FAILURE,
           payload: err.response.data.message,
         });
         return {
-          status: types.GET_COMMENT_BLOG_FAILURE,
-          payload: err.response.data.message,
+          status: types.DELETE_COMMENT_FAILURE,
+          message: err.response.data.message,
         };
       });
   };
+
+
+  
+
+
   

@@ -164,30 +164,8 @@ export const reducer = (state = initState, { type, payload }) => {
           error: payload,
       }
   }
-  case types.GET_COMMENT_BLOG_REQUEST:{
-    return {
-        ...state,
-        isLoading: true,
-    }
-  }
 
-  case types.GET_COMMENT_BLOG_SUCCESS:{
-    return {
-        ...state,
-        isLoading: false,
-        comment_data: payload
-    }
-}
-
-case types.GET_COMMENT_BLOG_FAILURE:{
-    return {
-        ...state,
-        error: payload,
-    }
-}
-
-
-    default: {
+     default: {
       return state;
     }
   }
