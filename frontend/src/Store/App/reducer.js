@@ -142,6 +142,7 @@ export const reducer = (state = initState, { type, payload }) => {
             error: payload,
         }
     }
+    
 
     case types.COMMENT_BLOG_REQUEST:{
       return {

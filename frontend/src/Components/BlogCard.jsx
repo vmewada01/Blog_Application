@@ -41,6 +41,7 @@ import {
   getCommentedBlogs,
   getLikeCommentBlogs,
   likeBlog,
+  removelikeBlog,
 } from "../Store/App/action";
 import { AiFillDelete } from "react-icons/ai";
 
@@ -138,30 +139,6 @@ const BlogCard = ({
   };
   const toShow = description.substring(0, 100) + "...";
 
-  const handlelikeFunc = (params) => {
-    // console.log(params);
-    dispatch(likeBlog(params)).then((res) => {
-      if (res.status === LIKE_BLOG_SUCCESS) {
-        toast({
-          title: res.message,
-          status: "success",
-          duration: 3000,
-          isClosable: true,
-          position: "top",
-        });
-        window.location.reload();
-      } else if (res.status === LIKE_BLOG_FAILURE) {
-        toast({
-          title: res.message,
-          status: "error",
-          duration: 3000,
-          isClosable: true,
-          position: "top",
-        });
-      }
-    });
-  };
-
   const handleDeleteFunc = (blogId,commentId) => {
     console.log(blogId,commentId)
     dispatch(deleteComment(blogId,commentId)).then((res)=> {
@@ -188,7 +165,34 @@ const BlogCard = ({
     })
   };
 
- 
+  
+  const handlelikeFunc = (_id) => {
+
+    dispatch(likeBlog(_id)).then((res) => {
+      // console.log(res)
+      if (res.status === LIKE_BLOG_SUCCESS) {
+        toast({
+          title: res.message,
+          status: "success",
+          duration: 3000,
+          isClosable: true,
+          position: "top",
+        });
+        window.location.reload()
+      } else if (res.status === LIKE_BLOG_FAILURE) {
+        setLike(!like);
+        toast({
+          title: res.message,
+          status: "error",
+          duration: 3000,
+          isClosable: true,
+          position: "top",
+        });
+      }
+    });
+  };
+
+
 
   return (
     <Wrap
@@ -224,12 +228,15 @@ const BlogCard = ({
           <Flex justifyContent={"space-between"} alignItems={"center"}>
             <BlogTags tags={category} marginTop="3" />
             <Box mr="2rem">
-              {blog_likes ? (
+           
+            {blog_likes ? (
                 <FaHeart size={"25"} onClick={(e) => handlelikeFunc(_id)} />
               ) : (
                 <FaRegHeart size={"25"} onClick={(e) => handlelikeFunc(_id)} />
               )}
+             
             </Box>
+
           </Flex>
 
           <Heading fontSize="xl" marginTop="2">

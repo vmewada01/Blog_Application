@@ -3,7 +3,7 @@ const { Router } = require("express");
 
 const UserModel = require("../models/User.model");
 const BlogModel = require("../models/Blog.model");
-const BlogComment = require("../models/BlogComment.model");
+
 
 const commentBlog = Router();
 

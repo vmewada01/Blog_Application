@@ -57,26 +57,7 @@ const BlogTags = (props) => {
 };
 
 export const BlogAuthor = (props) => {
-  const dispatch = useDispatch()
-  const {blogId} = useParams();
-//console.log(blogId)
-  const comment_data = useSelector((store)=> store.appReducer.comment_data)
-  const user_Data= useSelector((store)=> store.appReducer.blog)
- // console.log(user_Data)
- const user= useSelector((store)=> store.authReducer.user)
-console.log(user)
-  const getComments=(id)=> {
   
-//console.log(id)
-  
-  dispatch(getBlog(blogId)).then((res)=> {
-    console.log(res)
-  }).catch((err)=> {
-    console.log(err)
-  })
- 
-}
-
   return (
     <Box>
     <HStack
@@ -101,28 +82,10 @@ console.log(user)
       </Box>
       <Text>—</Text>
       <Text>{props.date}</Text>
-      <Button fontSize={'10px'} onClick={()=> getComments(props._id)}>comments</Button>
+
      
     </HStack>
-     <Flex direction={'column'} gap={'0.2rem'}>
-     {comment_data.length>0  && comment_data.map((item,ind)=> {
-      return (
-        <Box   alignItems={'center'} justifyContent={'space-between'}  width={'100%'} key={ind}>
-           <Flex direction={'row'} justifyContent={'space-between'}>
-            <Flex alignItems={'center'}>
-            <Box><Image src={user.profile_pic} width={'30px'} height={'40px'} borderRadius={'50%'} /></Box>
-            <Box>{user.name}</Box>
-            </Flex>
-            <Box>{item.createdAt}</Box>
-            </Flex>
-            <Flex justifyContent={'space-between'}>
-            <Box>{item.comment}</Box>
-            <Box><Button fontSize={"10px"}>delete</Button></Box>
-            </Flex>
-        </Box>
-      )
-     })}
-      </Flex>
+    
       </Box>
   );
 };

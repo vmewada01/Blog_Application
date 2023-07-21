@@ -43,7 +43,7 @@ app.get("/", (req, res) => {
 
   app.use("/commentBlog",commentBlog)
 
-   app.use(authentication);
+  //  app.use(authentication);
 
 
 
