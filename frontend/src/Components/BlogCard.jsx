@@ -94,9 +94,10 @@ const BlogCard = ({
   author_profile_pic,
   blog_likes,
   blog_comments,
+  
 }) => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const dispatch = useDispatch()
   const toast = useToast();
   const [like, setLike] = useState(blog_likes);
   const [comment, setComment] = useState("");
@@ -124,7 +125,7 @@ const BlogCard = ({
           isClosable: true,
           position: "top",
         });
-        window.location.reload()
+         window.location.reload()
       } else if (res.status === COMMENT_BLOG_FAILURE) {
         setLike(!like);
         toast({
@@ -149,8 +150,8 @@ const BlogCard = ({
           duration: 3000,
           isClosable: true,
           position: "top",
-        });
-        window.location.reload();
+        })
+         window.location.reload();
       } else if (res.status === DELETE_COMMENT_FAILURE) {
         toast({
           title: res.message,
@@ -178,7 +179,7 @@ const BlogCard = ({
           isClosable: true,
           position: "top",
         });
-        window.location.reload()
+         window.location.reload()
       } else if (res.status === LIKE_BLOG_FAILURE) {
         setLike(!like);
         toast({
@@ -288,7 +289,7 @@ const BlogCard = ({
                   <Flex alignItems={"center"} justifyContent={"space-between"}>
                     <Box>{item.text}</Box>
                     <Box onClick={() => handleDeleteFunc(item._id,_id)}>
-                      {" "}
+                 
                       <AiFillDelete size={"20"} />
                     </Box>
                   </Flex>

@@ -74,7 +74,7 @@ import {
                 w={"100%"}
               >
                 <Tooltip label={"click here to go home page"}>
-                  <BrowseLink to={"/"}>BLOG_APPLICATION</BrowseLink>
+                  <BrowseLink to={"/"}><Box fontStyle={'oblique'}>✯✯V-BLOG_APPLICATION✯✯</Box></BrowseLink>
                 </Tooltip>
               </Heading>
             </HStack>

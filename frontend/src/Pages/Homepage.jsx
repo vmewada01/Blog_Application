@@ -23,7 +23,7 @@ const Homepage = () => {
           {blogs.length &&
             blogs
               .reverse()
-              .map((blog) => <BlogCard {...blog} key={blog._id} />)}
+              .map((blog) => <BlogCard  {...blog} key={blog._id} />)}
         </Box>
       </Container>
     </>
