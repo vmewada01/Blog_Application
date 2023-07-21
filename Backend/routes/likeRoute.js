@@ -22,7 +22,7 @@ likeBlog.post("/:_id",authentication_Like_Comment, async (req, res) => {
     {new: true}
    );
 
- return res.status(200).send({ msg: "message updated successfully" });
+ return res.status(200).send({ message: "Blog updated successfully" });
 
   }
    catch (error) {

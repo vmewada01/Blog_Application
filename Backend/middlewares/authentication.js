@@ -21,13 +21,13 @@ const authentication = (req, res, next) => {
 };
 
 const authentication_Like_Comment = (req, res, next) => {
- // console.log(req)
+  console.log(req)
   if (!req.body?.headers?.authorization)
     return res
       .status(401)
       .send({ message: "You're not Logged in, Please login to our site" });
   const token = req.body?.headers?.authorization?.split(" ")[1];
-  // console.log(token)
+   console.log(token)
   jwt.verify(token, JWT_SECRET, function (err, decoded) {
     if (err) {
       return res

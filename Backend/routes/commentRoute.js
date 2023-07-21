@@ -3,11 +3,11 @@ const { Router } = require("express");
 
 const UserModel = require("../models/User.model");
 const BlogModel = require("../models/Blog.model");
-const {authentication_Like_Comment} = require("../middlewares/authentication")
+const {authentication} = require("../middlewares/authentication")
 
 const commentBlog = Router();
 
-commentBlog.delete("/:blogId/comment/:commentId",authentication_Like_Comment, async (req, res) => {
+commentBlog.delete("/:blogId/comment/:commentId",authentication, async (req, res) => {
   const { blogId, commentId } = req.params;
   //  console.log(blogId)
   //  console.log(commentId)
@@ -31,7 +31,7 @@ commentBlog.delete("/:blogId/comment/:commentId",authentication_Like_Comment, as
   }
 });
 
-commentBlog.post("/:blogId",authentication_Like_Comment, async (req, res) => {
+commentBlog.post("/:blogId",authentication, async (req, res) => {
   const { blogId } = req.params;
   // console.log(blogId)
   const { comment, author, image } = req.body;
@@ -54,7 +54,7 @@ commentBlog.post("/:blogId",authentication_Like_Comment, async (req, res) => {
       );
       //console.log("updated succesfully")
       // res.json(updatedBlog);
-      return res.status(200).send({ msg: "message updated successfully" });
+      return res.status(200).send({ message: "message updated successfully" });
     }
   } catch (err) {
     return res.status(404).send({ message: "something went wrong" });
