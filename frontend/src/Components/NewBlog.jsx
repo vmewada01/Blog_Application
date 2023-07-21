@@ -101,7 +101,8 @@ import {
             onClick={alerMessage}
             bg={colorMode === "light" ? "black" : "white"}
             color={colorMode === "light" ? "white" : "black"}
-          >
+            fontStyle={'oblique'}
+         >
             Create Your Story
           </Button>
         ) : (
@@ -114,7 +115,8 @@ import {
               onClick={onOpen}
               bg={colorMode === "light" ? "black" : "white"}
               color={colorMode === "light" ? "white" : "black"}
-            >
+             fontStyle={'oblique'}
+           >
               Create Your Story
             </Button>
   

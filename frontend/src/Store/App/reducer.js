@@ -8,7 +8,7 @@ const initState = {
   userBlogs: [],
   likes: [],
   comments: [],
-  comment_data: []
+
 };
 
 export const reducer = (state = initState, { type, payload }) => {

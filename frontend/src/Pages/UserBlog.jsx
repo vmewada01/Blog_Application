@@ -1,4 +1,4 @@
-import { Box, Container } from "@chakra-ui/react";
+import { Box, Container, Spinner } from "@chakra-ui/react";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
@@ -15,11 +15,23 @@ const UserBlog = () => {
   useEffect(() => {
     dispatch(getUserBlogs(userId));
   }, [dispatch, userId]);
+  const loading = useSelector((store) => store.appReducer.isLoading);
 
   return (
     <>
       <Navbar />
       <Container>
+      <Box display={'flex'} justifyContent={'center'} alignContent={'center'}>
+    {loading && (
+      <Spinner
+        thickness="4px"
+        speed="0.65s"
+        emptyColor="gray.200"
+        color="blue.500"
+        size="xl"
+      />
+    )}
+    </Box>
         <Box>
           {userBlogs.map((blog) => (
             <BlogCard {...blog} key={blog._id} />

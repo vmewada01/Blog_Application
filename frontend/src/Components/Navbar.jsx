@@ -100,10 +100,10 @@ import {
                   <MenuList
                     color={colorMode === "light" ? "gray.900" : "gray.100"}
                   >
-                    <MenuItem>
-                      <BrowseLink to={"/register"}>Sign Up</BrowseLink>
+                    <MenuItem fontWeight={'bold'} fontStyle={'oblique'} sx={{_hover:{backgroundColor:"#38a169"}}}>
+                      <BrowseLink  to={"/register"}>Sign Up</BrowseLink>
                     </MenuItem>
-                    <MenuItem>
+                    <MenuItem  fontWeight={'bold'} fontStyle={'oblique'} sx={{_hover:{backgroundColor:"#38a169"}}}   >
                       <BrowseLink to={"/login"}>Log In</BrowseLink>
                     </MenuItem>
                   </MenuList>
