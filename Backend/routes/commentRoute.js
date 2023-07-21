@@ -3,11 +3,11 @@ const { Router } = require("express");
 
 const UserModel = require("../models/User.model");
 const BlogModel = require("../models/Blog.model");
-
+const {authentication_Like_Comment} = require("../middlewares/authentication")
 
 const commentBlog = Router();
 
-commentBlog.delete("/:blogId/comment/:commentId", async (req, res) => {
+commentBlog.delete("/:blogId/comment/:commentId",authentication_Like_Comment, async (req, res) => {
   const { blogId, commentId } = req.params;
   //  console.log(blogId)
   //  console.log(commentId)
@@ -31,7 +31,7 @@ commentBlog.delete("/:blogId/comment/:commentId", async (req, res) => {
   }
 });
 
-commentBlog.post("/:blogId", async (req, res) => {
+commentBlog.post("/:blogId",authentication_Like_Comment, async (req, res) => {
   const { blogId } = req.params;
   // console.log(blogId)
   const { comment, author, image } = req.body;

@@ -3,7 +3,7 @@ const express = require("express");
 const cors = require("cors");
 
 const connection = require("./config/db");
-const authentication = require("./middlewares/authentication");
+
 const profileRouter = require("./routes/userProfile");
 const appRouter = require("./routes/blog");
 const blogsRouter = require("./routes/blogs");
@@ -35,7 +35,7 @@ app.use("/blogs", blogsRouter);
 
 app.use("/blog", userBlog);
 
- app.use(authentication);
+
 
 app.use("/likeBlog", likeBlog);
 

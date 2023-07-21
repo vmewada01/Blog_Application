@@ -3,10 +3,11 @@ const { Router } = require("express");
 
 const UserModel = require("../models/User.model");
 const BlogModel = require("../models/Blog.model");
+const {authentication_Like_Comment} = require("../middlewares/authentication")
 
 const likeBlog = Router();
 
-likeBlog.post("/:_id", async (req, res) => {
+likeBlog.post("/:_id",authentication_Like_Comment, async (req, res) => {
   try {
     const {_id}= req.params;
     console.log(_id)

@@ -2,6 +2,7 @@ require("dotenv").config();
 const { Router } = require("express");
 const cloudinary = require("cloudinary").v2;
 const moment = require("moment");
+const {authentication} = require("../middlewares/authentication")
 
 const fs = require("fs");
 const util = require("util");
@@ -19,7 +20,7 @@ const BlogModel = require("../models/Blog.model");
 
 const appRouter = Router();
 
-appRouter.post("/create/:userId", async (req, res) => {
+appRouter.post("/create/:userId",authentication, async (req, res) => {
   const { userId } = req.params;
   const file = req.files.blog_img;
   const { title, category, description } = req.body;

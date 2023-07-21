@@ -1,10 +1,11 @@
 const { Router } = require("express");
 
 const UserModel = require("../models/User.model");
+const {authentication} = require("../middlewares/authentication")
 
 const profileRouter = Router();
 
-profileRouter.get("/:userId", async (req, res) => {
+profileRouter.get("/:userId",authentication, async (req, res) => {
   const { userId } = req.params;
   if (!req.params.userId)
     return res.status(500).send({ message: "Please try again later" });
