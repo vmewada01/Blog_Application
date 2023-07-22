@@ -298,15 +298,15 @@ const BlogCard = ({
             <Button
               sx={{
                 color: "#fff",
-                backgroundColor: "#38a169",
+                backgroundColor: "black",
                 transition: "all ease 0.5s",
                 _hover: {
-                  boxShadow: "5px 5px 0px #000",
+                  boxShadow: "5px 5px 0px #38a169",
                 },
               }}
             >
               <FaRegComments
-                color="blue"
+                color="white"
                 onClick={() => handleComments(_id)}
                 size={"30"}
               />

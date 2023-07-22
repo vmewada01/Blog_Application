@@ -86,6 +86,7 @@ export default function SimpleCard() {
           py={6}
           px={2}
           border={"2px solid black"}
+          borderRadius={'1rem'}
         >
           <Box
             display={"flex"}

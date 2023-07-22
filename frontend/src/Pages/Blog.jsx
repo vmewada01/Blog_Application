@@ -49,7 +49,18 @@ const BlogTags = (props) => {
    
   return (
     <HStack spacing={2} marginTop={props.marginTop}>
-      <Tag size={"md"} variant="solid" colorScheme="green">
+      <Tag 
+      sx={{
+        color: "#fff",
+        backgroundColor: "#38a169",
+        transition: "all ease 0.5s",
+        _hover: {
+          boxShadow: "5px 5px 0px #000",
+        },
+      }} 
+      
+      
+      size={"md"} variant="solid" colorScheme="green">
         {props.tags}
       </Tag>
     </HStack>
@@ -67,6 +78,7 @@ export const BlogAuthor = (props) => {
       px={"2"}
       alignItems="center"
       border={"2px solid black"}
+      borderRadius={'1rem'}
       my={"1"}
     >
       <Box as={Flex} alignItems={"center"}>
@@ -76,7 +88,7 @@ export const BlogAuthor = (props) => {
           src={props.avatar}
           alt={`Avatar of ${props.name}`}
         />
-        <Text fontWeight={"semibold"} fontSize={["xs", "sm", "md"]}>
+        <Text fontStyle={'oblique'} fontWeight={"semibold"} fontSize={["xs", "sm", "md"]}>
           {props.name}
         </Text>
       </Box>

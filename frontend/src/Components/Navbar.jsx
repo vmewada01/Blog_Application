@@ -111,11 +111,11 @@ import {
                   <MenuList
                     color={colorMode === "light" ? "gray.900" : "gray.100"}
                   >
-                    <MenuItem>{user.name}</MenuItem>
-                    <MenuItem onClick={() => userBlogsHandler(user._id)}>
+                    <MenuItem fontWeight={'bold'} fontStyle={'oblique'} sx={{_hover:{backgroundColor:"#38a169"}}}>{user.name}</MenuItem>
+                    <MenuItem fontWeight={'bold'} fontStyle={'oblique'} sx={{_hover:{backgroundColor:"#38a169"}}} onClick={() => userBlogsHandler(user._id)}>
                       My Story
                     </MenuItem>
-                    <MenuItem onClick={handleLogout}>Logout</MenuItem>
+                    <MenuItem fontWeight={'bold'} fontStyle={'oblique'} sx={{_hover:{backgroundColor:"#38a169"}}} onClick={handleLogout}>Logout</MenuItem>
                   </MenuList>
                 )}
               </Menu>

@@ -31,6 +31,7 @@ export const reducer = (state = initState, { type, payload }) => {
       return {
         ...state,
         error: payload,
+        isLoading:false,
       };
     }
 
@@ -53,6 +54,7 @@ export const reducer = (state = initState, { type, payload }) => {
       return {
         ...state,
         error: payload,
+        isLoading:false,
       };
     }
 
@@ -75,6 +77,7 @@ export const reducer = (state = initState, { type, payload }) => {
       return {
         ...state,
         error: payload,
+        isLoading:false,
       };
     }
 
@@ -97,6 +100,7 @@ export const reducer = (state = initState, { type, payload }) => {
       return {
         ...state,
         error: payload,
+        isLoading:false,
       };
     }
 
@@ -118,6 +122,7 @@ export const reducer = (state = initState, { type, payload }) => {
         return {
           ...state,
           error: payload,
+          isLoading:false,
         };
       }
 
@@ -140,6 +145,7 @@ export const reducer = (state = initState, { type, payload }) => {
         return {
             ...state,
             error: payload,
+            isLoading:false,
         }
     }
     
@@ -163,6 +169,7 @@ export const reducer = (state = initState, { type, payload }) => {
       return {
           ...state,
           error: payload,
+          isLoading:false,
       }
   }
 
