@@ -5,7 +5,7 @@ import { getData } from "../../Utils/localStorage";
 export const register = (payload) => (dispatch) => {
   dispatch({ type: types.REGISTER_REQUEST });
   return axios
-    .post("https://v-blog-application.onrender.com/auth/register", payload, {
+    .post(`${process.env.BLOG_URL}/auth/register`, payload, {
       headers: {
         "Content-Type": "multipart/form-data",
       },
@@ -30,7 +30,7 @@ export const login = (payload) => (dispatch) => {
 
   dispatch({ type: types.LOGIN_REQUEST });
   return axios
-    .post("https://v-blog-application.onrender.com/auth/login", payload)
+    .post(`${process.env.BLOG_URL}/auth/login`, payload)
     .then((r) => {
       dispatch({
         type: types.LOGIN_SUCCESS,
@@ -53,7 +53,7 @@ export const login = (payload) => (dispatch) => {
 export const resetPassword = (payload) => (dispatch) => {
   dispatch({ type: types.RESET_PASSWORD_REQUEST });
   return axios
-    .patch("https://v-blog-application.onrender.com/auth/forgetpassword", payload)
+    .patch(`${process.env.BLOG_URL}/auth/forgetpassword`, payload)
     .then((r) => {
       dispatch({ type: types.RESET_PASSWORD_SUCCESS, payload: r.data.message });
       return { status: types.RESET_PASSWORD_SUCCESS, message: r.data.message };
@@ -74,7 +74,7 @@ export const getUser = (params) => (dispatch) => {
   const token = getData("token");
   dispatch({ type: types.GET_USER_REQUEST });
   return axios
-    .get(`https://v-blog-application.onrender.com/profile/${params}`, {
+    .get(`${process.env.BLOG_URL}/profile/${params}`, {
       headers: {
         authorization: `Bearer ${token}`,
       },
