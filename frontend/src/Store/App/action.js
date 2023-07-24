@@ -2,11 +2,14 @@ import axios from "axios";
 import { getData } from "../../Utils/localStorage";
 import * as types from "./actionTypes";
 
+const BLOG_URL = process.env.REACT_APP_BLOG_URL
+
 export const createBlog = (params, payload) => (dispatch) => {
+
   const token = getData("token");
   dispatch({ type: types.CREATE_BLOG_REQUEST });
   return axios
-    .post(`${process.env.BLOG_URL}/blog/create/${params}`, payload, {
+    .post(`${BLOG_URL}/blog/create/${params}`, payload, {
       headers: {
         "Content-Type": "multipart/form-data",
         authorization: `Bearer ${token}`,
@@ -29,9 +32,10 @@ export const createBlog = (params, payload) => (dispatch) => {
 };
 
 export const getBlogs = (payload) => (dispatch) => {
+
   dispatch({ type: types.GET_BLOGS_REQUEST });
   return axios
-    .get(`${process.env.BLOG_URL}/blogs`)
+    .get(`${BLOG_URL}/blogs`)
     .then((r) => {
       dispatch({ type: types.GET_BLOGS_SUCCESS, payload: r.data });
       return { status: types.GET_BLOGS_SUCCESS, message: r.data.message };
@@ -51,7 +55,7 @@ export const getBlogs = (payload) => (dispatch) => {
 export const getBlog = (params) => (dispatch) => {
   dispatch({ type: types.GET_BLOG_REQUEST });
   return axios
-    .get(`${process.env.BLOG_URL}/blog/${params}`)
+    .get(`${BLOG_URL}/blog/${params}`)
     .then((r) => {
       dispatch({ type: types.GET_BLOG_SUCCESS, payload: r.data });
       return { status: types.GET_BLOG_SUCCESS, message: r.data.message };
@@ -71,7 +75,7 @@ export const getBlog = (params) => (dispatch) => {
 export const getUserBlogs = (params) => (dispatch) => {
   dispatch({ type: types.GET_BLOG_REQUEST });
   return axios
-    .get(`${process.env.BLOG_URL}/blogs/${params}`)
+    .get(`${BLOG_URL}/blogs/${params}`)
     .then((r) => {
       dispatch({ type: types.GET_USER_BLOGS_SUCCESS, payload: r.data });
       return { status: types.GET_USER_BLOGS_SUCCESS, message: r.data.message };
@@ -93,7 +97,7 @@ export const updateBlog = (params, payload) => (dispatch) => {
   const token = getData("token");
   dispatch({ type: types.UPDATE_BLOG_REQUEST });
   return axios
-    .patch(`${process.env.BLOG_URL}/blog/${params}`, payload, {
+    .patch(`${BLOG_URL}/blog/${params}`, payload, {
       headers: {
         "Content-Type": "multipart/form-data",
         authorization: `Bearer ${token}`,
@@ -119,7 +123,7 @@ export const deleteBlog = (params) => (dispatch) => {
   const token = getData("token");
   dispatch({ type: types.DELETE_BLOG_REQUEST });
   return axios
-    .delete(`${process.env.BLOG_URL}/blog/${params}`, {
+    .delete(`${BLOG_URL}/blog/${params}`, {
       headers: {
         authorization: `Bearer ${token}`,
       },
@@ -149,7 +153,7 @@ export const deleteBlog = (params) => (dispatch) => {
     dispatch({ type: types.COMMENT_BLOG_REQUEST });
     console.log(token)
     return axios
-      .post(`${process.env.BLOG_URL}/commentBlog/${params}`,payload, {
+      .post(`${BLOG_URL}/commentBlog/${params}`,payload, {
         headers: {
           authorization: `Bearer ${token}`,
         },
@@ -178,7 +182,7 @@ export const deleteBlog = (params) => (dispatch) => {
     dispatch({ type: types.DELETE_COMMENT_REQUEST });
     //console.log(token)
     return axios
-      .delete(`${process.env.BLOG_URL}/commentBlog/${blogId}/comment/${commentId}`, {
+      .delete(`${BLOG_URL}/commentBlog/${blogId}/comment/${commentId}`, {
         headers: {
           authorization: `Bearer ${token}`,
         },
@@ -208,7 +212,7 @@ export const deleteBlog = (params) => (dispatch) => {
     dispatch({ type: types.LIKE_BLOG_REQUEST });
     console.log(token)
     return axios
-      .post(`${process.env.BLOG_URL}/likeBlog/${params}`, {
+      .post(`${BLOG_URL}/likeBlog/${params}`, {
         headers: {
           authorization: `Bearer ${token}`,
         },

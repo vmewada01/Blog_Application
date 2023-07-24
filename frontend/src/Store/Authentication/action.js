@@ -2,10 +2,12 @@ import * as types from "./actionTypes";
 import axios from "axios";
 import { getData } from "../../Utils/localStorage";
 
+const BLOG_URL = process.env.REACT_APP_BLOG_URL
+
 export const register = (payload) => (dispatch) => {
   dispatch({ type: types.REGISTER_REQUEST });
   return axios
-    .post(`${process.env.BLOG_URL}/auth/register`, payload, {
+    .post(`${BLOG_URL}/auth/register`, payload, {
       headers: {
         "Content-Type": "multipart/form-data",
       },
@@ -30,7 +32,7 @@ export const login = (payload) => (dispatch) => {
 
   dispatch({ type: types.LOGIN_REQUEST });
   return axios
-    .post(`${process.env.BLOG_URL}/auth/login`, payload)
+    .post(`${BLOG_URL}/auth/login`, payload)
     .then((r) => {
       dispatch({
         type: types.LOGIN_SUCCESS,
@@ -53,7 +55,7 @@ export const login = (payload) => (dispatch) => {
 export const resetPassword = (payload) => (dispatch) => {
   dispatch({ type: types.RESET_PASSWORD_REQUEST });
   return axios
-    .patch(`${process.env.BLOG_URL}/auth/forgetpassword`, payload)
+    .patch(`${BLOG_URL}/auth/forgetpassword`, payload)
     .then((r) => {
       dispatch({ type: types.RESET_PASSWORD_SUCCESS, payload: r.data.message });
       return { status: types.RESET_PASSWORD_SUCCESS, message: r.data.message };
@@ -74,7 +76,7 @@ export const getUser = (params) => (dispatch) => {
   const token = getData("token");
   dispatch({ type: types.GET_USER_REQUEST });
   return axios
-    .get(`${process.env.BLOG_URL}/profile/${params}`, {
+    .get(`${BLOG_URL}/profile/${params}`, {
       headers: {
         authorization: `Bearer ${token}`,
       },
